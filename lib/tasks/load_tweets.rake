@@ -13,10 +13,10 @@ task :load_tweets => :environment do
 
   LastTweet.configuration.twitter_accounts.each do |twitter_account|
     begin
-      text = Twitter.user_timeline(twitter_account).first.text
-      puts "last_tweet_#{twitter_account}"
-      Rails.cache.write("last_tweet_#{twitter_account}", text)
-      puts Rails.cache.read("last_tweet_#{twitter_account}")
+      tweets = Twitter.user_timeline(twitter_account[:name])[0..twitter_account[:count]-1].map(&:text)
+      puts "#{twitter_account[:name]}_tweets"
+      Rails.cache.write("#{twitter_account[:name]}_tweets", tweets)
+      puts Rails.cache.read("#{twitter_account[:name]}_tweets")
       puts 'Done.'
     rescue => e
       puts "ERROR: #{e}"

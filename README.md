@@ -28,12 +28,14 @@ Create intitializer:
       config.consumer_secret    = ''
       config.oauth_token        = ''
       config.oauth_token_secret = ''
-      config.twitter_accounts   = ['SmartMedia_cz', 'sun_marketing', 'rails']
+      config.twitter_accounts   = [{name: 'SmartMedia_cz', count: 3}, {name: 'sun_marketing', count: 3}, {name: 'rails', count: 1}]
     end
 
     rake load_tweets
 
-    Rails.cache.read('last_tweet_SmartMedia_cz')
+    Rails.cache.read('SmartMedia_cz_tweets').each do |tweet|
+      puts tweet
+    end
 
 ## Contributing
 
